@@ -19,13 +19,22 @@
         </div>
       </div>
 
-      <div class="post-date text-faded">{{ post.publishedAt }}</div>
+      <div class="post-date text-faded" :title="humanFriendlyDay(post.publishedAt)">
+        {{ diffForHumans(post.publishedAt) }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps, type PropType, reactive } from 'vue'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import localizedDate from 'dayjs/plugin/localizedFormat'
+
+dayjs.extend(relativeTime)
+dayjs.extend(localizedDate)
+
 import sourceData from '@/utils/data.json'
 
 import type { Post } from '@/utils/dtos'
@@ -41,6 +50,14 @@ const users = reactive(sourceData.users)
 
 function userById(userId: string) {
   return users.find((user) => user.id === userId)
+}
+
+function diffForHumans(time: number) {
+  return dayjs.unix(time).fromNow()
+}
+
+function humanFriendlyDay(time: number) {
+  return dayjs.unix(time).format('llll')
 }
 </script>
 
