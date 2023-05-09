@@ -19,9 +19,7 @@
         </div>
       </div>
 
-      <div class="post-date text-faded" :title="humanFriendlyDay(post.publishedAt)">
-        {{ diffForHumans(post.publishedAt) }}
-      </div>
+      <base-date class="post-date text-faded" :timestamp="post.publishedAt"></base-date>
     </div>
   </div>
 </template>
@@ -50,14 +48,6 @@ const users = reactive(sourceData.users)
 
 function userById(userId: string) {
   return users.find((user) => user.id === userId)
-}
-
-function diffForHumans(time: number) {
-  return dayjs.unix(time).fromNow()
-}
-
-function humanFriendlyDay(time: number) {
-  return dayjs.unix(time).format('llll')
 }
 </script>
 
