@@ -12,6 +12,6 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 //             name,         component
-app.component('BaseDateVue', BaseDateVue)
+app.component('BaseDate', BaseDateVue)
 
 app.mount('#app')

@@ -5,6 +5,7 @@ import sourceData from '@/utils/data.json'
 import PageHome from '@/views/PageHome.vue'
 import ThreadDetails from '../views/ThreadDetails.vue'
 import NotFound from '../views/NotFound.vue'
+import ForumPage from '../views/ForumPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,12 @@ const router = createRouter({
           hash: to.hash
         })
       }
+    },
+    {
+      path: '/forum/:id',
+      name: 'Forum',
+      component: ForumPage,
+      props: true
     },
     {
       path: '/:patchMatch(.*)*',
