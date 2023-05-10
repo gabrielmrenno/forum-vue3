@@ -6,6 +6,7 @@ import PageHome from '@/views/PageHome.vue'
 import ThreadDetails from '../views/ThreadDetails.vue'
 import NotFound from '../views/NotFound.vue'
 import ForumPage from '../views/ForumPage.vue'
+import PageCategory from '../views/PageCategory.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,12 @@ const router = createRouter({
       path: '/forum/:id',
       name: 'Forum',
       component: ForumPage,
+      props: true
+    },
+    {
+      path: '/category/:id',
+      name: 'Category',
+      component: PageCategory,
       props: true
     },
     {
