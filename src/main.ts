@@ -4,7 +4,6 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-import './assets/main.css'
 import BaseDateVue from './components/BaseDate.vue'
 
 const app = createApp(App)

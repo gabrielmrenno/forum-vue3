@@ -1,17 +1,17 @@
 <template>
   <h1>Welcome to the Forum</h1>
-  <ThreadList :threads="threads" />
+  <ForumList :forums="forums" />
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue'
 
 import sourceData from '@/utils/data.json'
+import type { Forum } from '@/utils/dtos'
 
-import ThreadList from '@/components/ThreadList.vue'
-import type { Thread } from '@/utils/dtos'
+import ForumList from '@/components/ForumList.vue'
 
-const threads = reactive<Thread[]>(sourceData.threads)
+const forums = reactive<Forum[]>(sourceData.forums)
 </script>
 
 <style scoped></style>
