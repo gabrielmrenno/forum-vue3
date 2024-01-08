@@ -29,8 +29,12 @@ const thread = computed(() => store.state.threads.find((thread: Thread) => threa
 const threadPosts = computed(() => posts.filter((post: Post) => post.threadId === props.id))
 
 function addPost(post: Post) {
-  posts.push(post)
-  thread.value?.posts.push(post.id)
+  const newPost: Post = {
+    ...post,
+    threadId: props.id,
+    publishedAt: Date.now() / 1000
+  }
+  store.dispatch('addPost', newPost)
 }
 </script>
 

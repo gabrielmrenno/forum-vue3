@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { defineEmits, ref } from 'vue'
 
 import type { Post } from '@/utils/dtos'
 
@@ -38,13 +38,11 @@ const props = defineProps({
 const newPostText = ref('')
 
 function addPost() {
-  const postId = 'gggg' + Math.random()
   const post: Post = {
     text: newPostText.value,
     publishedAt: Math.floor(Date.now() / 1000),
     threadId: props.id,
-    userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1',
-    id: postId
+    userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1'
   }
 
   emit('save-post', post)

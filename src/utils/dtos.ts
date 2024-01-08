@@ -21,7 +21,7 @@ export interface Post {
   text: string
   threadId: string
   userId: string
-  id: string
+  id?: string
   reactions?: Reactions
 }
 
