@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import sourceData from '@/utils/data.json'
-
+import type { Thread } from '@/utils/dtos'
 import PageHome from '@/views/PageHome.vue'
-import ThreadDetails from '../views/ThreadDetails.vue'
-import NotFound from '../views/NotFound.vue'
 import ForumPage from '../views/ForumPage.vue'
+import NotFound from '../views/NotFound.vue'
 import PageCategory from '../views/PageCategory.vue'
+import ThreadDetails from '../views/ThreadDetails.vue'
+
+import store from '@/store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +25,9 @@ const router = createRouter({
       // next: resolve the navigation
       beforeEnter(to, from, next) {
         // check if thread exists
-        const threadExists = sourceData.threads.find((thread) => thread.id === to.params.id)
+        const threadExists = store.state.threads.find(
+          (thread: Thread) => thread.id === to.params.id
+        )
         // if exists continue
         if (threadExists) {
           return next()

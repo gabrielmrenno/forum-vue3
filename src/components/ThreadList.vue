@@ -34,10 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, defineProps, type PropType } from 'vue'
+import { computed, defineProps, type PropType } from 'vue'
+import { useStore } from 'vuex'
 
-import type { Thread } from '@/utils/dtos'
-import sourceData from '@/utils/data.json'
+import type { Thread, User } from '@/utils/dtos'
 
 defineProps({
   threads: {
@@ -46,10 +46,12 @@ defineProps({
   }
 })
 
-const users = reactive(sourceData.users)
+const store = useStore()
 
-function userById(userId: string) {
-  return users.find((user) => user.id === userId)
+const users = computed(() => store.state.users)
+
+function userById(userId: string): User | undefined {
+  return users.value.find((user: User) => user.id === userId)
 }
 </script>
 

@@ -9,10 +9,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Category } from '@/utils/dtos'
 import { reactive, type PropType } from 'vue'
+import { useStore } from 'vuex'
+
+import type { Category, Forum } from '@/utils/dtos'
 import ForumList from './ForumList.vue'
-import sourceData from '@/utils/data.json'
 
 defineProps({
   categories: {
@@ -21,10 +22,12 @@ defineProps({
   }
 })
 
-const forums = reactive(sourceData.forums)
+const store = useStore()
+
+const forums = reactive(store.state.forums)
 
 function getForumByCategory(categoryId: string) {
-  return forums.filter((forum) => forum.categoryId === categoryId)
+  return forums.filter((forum: Forum) => forum.categoryId === categoryId)
 }
 </script>
 

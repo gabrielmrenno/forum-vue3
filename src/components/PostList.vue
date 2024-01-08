@@ -25,17 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, type PropType, reactive } from 'vue'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import localizedDate from 'dayjs/plugin/localizedFormat'
+import { computed, defineProps, type PropType } from 'vue'
+import { useStore } from 'vuex'
 
-dayjs.extend(relativeTime)
-dayjs.extend(localizedDate)
-
-import sourceData from '@/utils/data.json'
-
-import type { Post } from '@/utils/dtos'
+import type { Post, User } from '@/utils/dtos'
 
 defineProps({
   posts: {
@@ -44,10 +37,12 @@ defineProps({
   }
 })
 
-const users = reactive(sourceData.users)
+const store = useStore()
+
+const users = computed(() => store.state.users)
 
 function userById(userId: string) {
-  return users.find((user) => user.id === userId)
+  return users.value.find((user: User) => user.id === userId)
 }
 </script>
 

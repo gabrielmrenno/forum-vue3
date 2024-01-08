@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, defineProps } from 'vue'
-import sourceData from '@/utils/data.json'
+import { computed, defineProps, reactive } from 'vue'
+import { useStore } from 'vuex'
 
-import PostList from '@/components/PostList.vue'
 import PostEditor from '@/components/PostEditor.vue'
-import type { Post } from '@/utils/dtos'
+import PostList from '@/components/PostList.vue'
+import type { Post, Thread } from '@/utils/dtos'
 
 const props = defineProps({
   id: {
@@ -21,11 +21,12 @@ const props = defineProps({
     required: true
   }
 })
-const threads = reactive(sourceData.threads)
-const posts: Post[] = reactive(sourceData.posts)
 
-const thread = computed(() => threads.find((thread) => thread.id === props.id))
-const threadPosts = computed(() => posts.filter((post) => post.threadId === props.id))
+const store = useStore()
+const posts: Post[] = reactive<Post[]>(store.state.posts)
+
+const thread = computed(() => store.state.threads.find((thread: Thread) => thread.id === props.id))
+const threadPosts = computed(() => posts.filter((post: Post) => post.threadId === props.id))
 
 function addPost(post: Post) {
   posts.push(post)

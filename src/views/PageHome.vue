@@ -4,14 +4,14 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-
-import sourceData from '@/utils/data.json'
-import type { Category } from '@/utils/dtos'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 import CategoryList from '@/components/CategoryList.vue'
 
-const categories = reactive<Category[]>(sourceData.categories)
+const store = useStore()
+
+const categories = computed(() => store.state.categories)
 </script>
 
 <style scoped></style>
