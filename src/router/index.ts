@@ -1,11 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import type { Thread } from '@/utils/dtos'
-import PageHome from '@/views/PageHome.vue'
-import ForumPage from '../views/ForumPage.vue'
-import NotFound from '../views/NotFound.vue'
-import PageCategory from '../views/PageCategory.vue'
-import ThreadDetails from '../views/ThreadDetails.vue'
 
 import store from '@/store'
 
@@ -15,12 +10,23 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: PageHome
+      component: () => import('../views/PageHome.vue')
+    },
+    {
+      path: '/me',
+      name: 'Profile',
+      component: () => import('../views/PageProfile.vue')
+    },
+    {
+      path: '/me/edit',
+      name: 'ProfileEdit',
+      component: () => import('../views/PageProfile.vue'),
+      props: { edit: true }
     },
     {
       path: '/thread/:id',
       name: 'ThreadDetails',
-      component: ThreadDetails,
+      component: () => import('../views/ThreadDetails.vue'),
       props: true,
       // next: resolve the navigation
       beforeEnter(to, from, next) {
@@ -45,19 +51,19 @@ const router = createRouter({
     {
       path: '/forum/:id',
       name: 'Forum',
-      component: ForumPage,
+      component: () => import('../views/ForumPage.vue'),
       props: true
     },
     {
       path: '/category/:id',
       name: 'Category',
-      component: PageCategory,
+      component: () => import('../views/PageCategory.vue'),
       props: true
     },
     {
       path: '/:patchMatch(.*)*',
       name: 'NotFound',
-      component: NotFound
+      component: () => import('../views/NotFound.vue')
     }
   ]
 })
