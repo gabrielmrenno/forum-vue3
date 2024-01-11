@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import type { Thread } from '@/utils/dtos'
-
+import { findById } from '@/helpers'
 import store from '@/store'
 
 const router = createRouter({
@@ -32,9 +31,7 @@ const router = createRouter({
       // next: resolve the navigation
       beforeEnter(to, from, next) {
         // check if thread exists
-        const threadExists = store.state.threads.find(
-          (thread: Thread) => thread.id === to.params.id
-        )
+        const threadExists = findById(to.params.id as string, store.state.threads)
         // if exists continue
         if (threadExists) {
           return next()

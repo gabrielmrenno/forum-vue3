@@ -37,6 +37,7 @@
 import { computed, defineProps, type PropType } from 'vue'
 import { useStore } from 'vuex'
 
+import { findById } from '@/helpers'
 import type { Thread, User } from '@/utils/dtos'
 
 defineProps({
@@ -51,7 +52,7 @@ const store = useStore()
 const users = computed(() => store.state.users)
 
 function userById(userId: string): User | undefined {
-  return users.value.find((user: User) => user.id === userId)
+  return findById(userId, users.value)
 }
 </script>
 

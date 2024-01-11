@@ -28,7 +28,8 @@
 import { computed, defineProps, type PropType } from 'vue'
 import { useStore } from 'vuex'
 
-import type { Post, User } from '@/utils/dtos'
+import { findById } from '@/helpers'
+import type { Post } from '@/utils/dtos'
 
 defineProps({
   posts: {
@@ -42,7 +43,7 @@ const store = useStore()
 const users = computed(() => store.state.users)
 
 function userById(userId: string) {
-  return users.value.find((user: User) => user.id === userId)
+  return findById(userId, users.value)
 }
 </script>
 

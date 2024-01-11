@@ -16,6 +16,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 import ThreadEditor from '@/components/ThreadEditor.vue'
+import { findById } from '@/helpers'
 import type { Forum } from '@/utils/dtos'
 
 interface SaveThreadEvent {
@@ -32,9 +33,7 @@ const props = defineProps({
 const store = useStore()
 const router = useRouter()
 
-const forum = computed<Forum>(() =>
-  store.state.forums.find((forum: Forum) => forum.id === props.forumId)
-)
+const forum = computed<Forum>(() => findById(props.forumId, store.state.forums))
 
 async function save({ title, content }: SaveThreadEvent) {
   const newThread = await store.dispatch('createThread', {

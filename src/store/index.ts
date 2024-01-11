@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 
+import { findById, upsert } from '@/helpers'
 import sourceData from '@/utils/data.json'
-import type { AddPost, AddThread, Post, Thread, UpdateThread, User } from '@/utils/dtos'
+import type { AddPost, AddThread, Post, Thread, UpdateThread } from '@/utils/dtos'
 
 export default createStore({
   // application global data - to use in multiple components
@@ -11,7 +12,7 @@ export default createStore({
   },
   getters: {
     authUser(state) {
-      const user = state.users.find((user) => user.id === state.authId)
+      const user = findById(state.authId, state.users)
       if (!user) return null
 
       return {
@@ -54,11 +55,11 @@ export default createStore({
       commit('appendThreadToForum', { forumId, threadId: id })
       commit('appendThreadToUser', { userId, threadId: id })
       dispatch('addPost', { text, threadId: id })
-      return state.threads.find((thread) => thread.id === id)
+      return findById(id, state.threads)
     },
     async updateThread({ commit, state }, threadData: UpdateThread) {
-      const thread = state.threads.find((thread: Thread) => thread.id === threadData.id)
-      const post = state.posts.find((post: Post) => post.id === thread?.posts[0])
+      const thread = findById(threadData.id, state.threads)
+      const post = findById(thread?.posts[0], state.posts)
       const newThread = { ...thread, title: threadData.title }
       const newPost = { ...post, text: threadData.text }
       commit('setThread', { thread: newThread })
@@ -72,39 +73,29 @@ export default createStore({
   // synchronous transactions that modify the state. They are the only way to change the state in the Vuex store
   mutations: {
     setPost(state, { newPost }) {
-      const postIndex = state.posts.findIndex((post) => post.id === newPost.id)
-      if (postIndex !== -1) {
-        state.posts[postIndex] = newPost
-        return
-      }
-      state.posts.push(newPost)
+      upsert(state.posts, newPost)
     },
     setUser(state, { user, userId }) {
       const userIndex = state.users.findIndex((user) => user.id === userId)
       state.users[userIndex] = user
     },
     setThread(state, { thread }) {
-      const threadIndex = state.threads.findIndex((t) => t.id === thread.id)
-      if (threadIndex !== -1) {
-        state.threads[threadIndex] = thread
-        return
-      }
-      state.threads.push(thread)
+      upsert(state.threads, thread)
     },
     appendPostToThread(state, { postId, threadId }) {
-      const thread = state.threads.find((thread) => thread.id === threadId)
+      const thread = findById(threadId, state.threads)
       if (!thread) return
       thread.posts = thread.posts || []
       thread.posts.push(postId)
     },
     appendThreadToForum(state, { forumId, threadId }) {
-      const forum = state.forums.find((forum) => forum.id === forumId)
+      const forum = findById(forumId, state.forums)
       if (!forum) return
       forum.threads = forum.threads ?? []
       forum.threads.push(threadId)
     },
     appendThreadToUser(state, { userId, threadId }) {
-      const user: User | undefined = state.users.find((user) => user.id === userId)
+      const user = findById(userId, state.users)
       if (!user) return
       user.threads = user.threads ?? []
       user.threads.push(threadId)

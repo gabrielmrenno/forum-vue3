@@ -8,7 +8,8 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 import ForumList from '@/components/ForumList.vue'
-import type { Category, Forum } from '@/utils/dtos'
+import { findById } from '@/helpers'
+import type { Forum } from '@/utils/dtos'
 
 const props = defineProps({
   id: {
@@ -19,9 +20,7 @@ const props = defineProps({
 
 const store = useStore()
 
-const category = computed(() =>
-  store.state.categories.find((category: Category) => category.id === props.id)
-)
+const category = computed(() => findById(props.id, store.state.categories))
 
 function getForumByCategory(categoryId: string | undefined) {
   return store.state.forums.filter((forum: Forum) => forum.categoryId === categoryId)
