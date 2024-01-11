@@ -15,7 +15,8 @@ const router = createRouter({
     {
       path: '/me',
       name: 'Profile',
-      component: () => import('../views/PageProfile.vue')
+      component: () => import('../views/PageProfile.vue'),
+      meta: { toTop: true, smoothScroll: true }
     },
     {
       path: '/me/edit',
@@ -65,7 +66,13 @@ const router = createRouter({
       name: 'NotFound',
       component: () => import('../views/NotFound.vue')
     }
-  ]
+  ],
+  scrollBehavior(to) {
+    return {
+      top: to.meta.toTop ? 0 : undefined,
+      behavior: to.meta.smoothScroll ? 'smooth' : 'auto'
+    }
+  }
 })
 
 export default router

@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 
 import sourceData from '@/utils/data.json'
-import type { Post, Thread } from '@/utils/dtos'
+import type { AddPost, Post, Thread } from '@/utils/dtos'
 
 export default createStore({
   // application global data - to use in multiple components
@@ -35,10 +35,15 @@ export default createStore({
     - Instead of mutating the state, actions commit mutations (one or more).
     - Actions can contain arbitrary asynchronous operations, while mutations are strictly synchronous. */
   actions: {
-    addPost({ commit }, post: Post) {
-      post.id = 'gggg' + Math.random()
-      commit('setPost', { newPost: post }) // set the post
-      commit('appendPostToThread', { postId: post.id, thread: post.threadId }) // append the post to the thread
+    addPost({ commit, state }, post: AddPost) {
+      const newPost: Post = {
+        ...post,
+        publishedAt: Math.floor(Date.now() / 1000),
+        id: 'gggg' + Math.random(),
+        userId: state.authId
+      }
+      commit('setPost', { newPost: newPost }) // set the post
+      commit('appendPostToThread', { postId: newPost.id, thread: newPost.threadId }) // append the post to the thread
     },
     updateUser({ commit }, user) {
       commit('setUser', { user, userId: user.id })

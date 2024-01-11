@@ -13,7 +13,7 @@ import { useStore } from 'vuex'
 
 import PostEditor from '@/components/PostEditor.vue'
 import PostList from '@/components/PostList.vue'
-import type { Post, Thread } from '@/utils/dtos'
+import type { AddPost, Post, Thread } from '@/utils/dtos'
 
 const props = defineProps({
   id: {
@@ -28,11 +28,10 @@ const posts: Post[] = reactive<Post[]>(store.state.posts)
 const thread = computed(() => store.state.threads.find((thread: Thread) => thread.id === props.id))
 const threadPosts = computed(() => posts.filter((post: Post) => post.threadId === props.id))
 
-function addPost(post: Post) {
-  const newPost: Post = {
+function addPost(post: AddPost) {
+  const newPost: AddPost = {
     ...post,
-    threadId: props.id,
-    publishedAt: Date.now() / 1000
+    threadId: props.id
   }
   store.dispatch('addPost', newPost)
 }

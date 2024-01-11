@@ -22,10 +22,10 @@
 <script setup lang="ts">
 import { defineEmits, ref } from 'vue'
 
-import type { Post } from '@/utils/dtos'
+import type { AddPost } from '@/utils/dtos'
 
 const emit = defineEmits<{
-  (e: 'save-post', post: Post): void
+  (e: 'save-post', post: AddPost): void
 }>()
 
 const props = defineProps({
@@ -38,11 +38,9 @@ const props = defineProps({
 const newPostText = ref('')
 
 function addPost() {
-  const post: Post = {
+  const post: AddPost = {
     text: newPostText.value,
-    publishedAt: Math.floor(Date.now() / 1000),
-    threadId: props.id,
-    userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1'
+    threadId: props.id
   }
 
   emit('save-post', post)

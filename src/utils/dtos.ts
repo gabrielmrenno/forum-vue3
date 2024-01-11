@@ -25,6 +25,8 @@ export interface Post {
   reactions?: Reactions
 }
 
+export type AddPost = Omit<Post, 'id' | 'userId' | 'publishedAt'>
+
 export interface Edited {
   at: number
   by: string
