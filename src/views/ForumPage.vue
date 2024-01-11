@@ -5,7 +5,11 @@
         <h1>{{ forum!.name }}</h1>
         <p class="text-lead">{{ forum!.description }}</p>
       </div>
-      <a href="#" class="btn-green btn-small">Start a thread</a>
+      <RouterLink
+        :to="{ name: 'ThreadCreate', params: { forumId: forum.id } }"
+        class="btn-green btn-small"
+        >Start a thread</RouterLink
+      >
     </div>
   </div>
 
@@ -30,8 +34,10 @@ const props = defineProps({
 
 const store = useStore()
 
-const forum = computed(() => store.state.forums.find((forum: Forum) => forum.id === props.id))
-const threads = computed(() =>
+const forum = computed<Forum>(() =>
+  store.state.forums.find((forum: Forum) => forum.id === props.id)
+)
+const threads = computed<Thread[]>(() =>
   store.state.threads.filter((thread: Thread) => thread.forumId === props.id)
 )
 </script>

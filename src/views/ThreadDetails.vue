@@ -1,6 +1,11 @@
 <template>
   <div class="col-large push-top">
-    <h1>{{ thread?.title }}</h1>
+    <h1>
+      {{ thread?.title }}
+      <RouterLink :to="{ name: 'ThreadEdit', params: { id } }">
+        <button @click="navigate" class="btn-green btn-small">Edit Thread</button>
+      </RouterLink>
+    </h1>
 
     <post-list :posts="threadPosts" />
     <post-editor :id="id" @save-post="addPost"></post-editor>
@@ -14,6 +19,7 @@ import { useStore } from 'vuex'
 import PostEditor from '@/components/PostEditor.vue'
 import PostList from '@/components/PostList.vue'
 import type { AddPost, Post, Thread } from '@/utils/dtos'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   id: {
@@ -34,6 +40,10 @@ function addPost(post: AddPost) {
     threadId: props.id
   }
   store.dispatch('addPost', newPost)
+}
+
+function navigate() {
+  console.log('navigate')
 }
 </script>
 

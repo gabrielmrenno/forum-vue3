@@ -87,6 +87,20 @@ export interface Thread {
   id: string
 }
 
+export interface AddThread {
+  id: string
+  forumId: string
+  title: string
+  userId: string
+  publishedAt: number
+}
+
+export interface UpdateThread {
+  id: string
+  title: string
+  text: string
+}
+
 export interface User {
   avatar: string
   email: string
@@ -100,4 +114,5 @@ export interface User {
   bio?: string
   twitter?: string
   website?: string
+  threads?: string[]
 }

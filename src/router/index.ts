@@ -50,6 +50,18 @@ const router = createRouter({
       }
     },
     {
+      path: '/forum/:forumId/thread/create',
+      name: 'ThreadCreate',
+      component: () => import('../views/ThreadCreate.vue'),
+      props: true
+    },
+    {
+      path: '/thread/:id/edit',
+      name: 'ThreadEdit',
+      component: () => import('../views/ThreadEdit.vue'),
+      props: true
+    },
+    {
       path: '/forum/:id',
       name: 'Forum',
       component: () => import('../views/ForumPage.vue'),
