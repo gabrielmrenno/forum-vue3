@@ -8,7 +8,16 @@
           <img class="avatar-large" :src="userById(post.userId!)?.avatar" alt="" />
         </a>
 
-        <p class="desktop-only text-small">107 posts</p>
+        <p class="desktop-only text-small">
+          <PluralComponent :count="userById(post.userId!)?.postsCount" word="post" plural="posts" />
+        </p>
+        <p class="desktop-only text-small">
+          <PluralComponent
+            :count="userById(post.userId!)?.threadsCount"
+            word="thread"
+            plural="threads"
+          />
+        </p>
       </div>
 
       <div class="post-content">
@@ -25,11 +34,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, type PropType } from 'vue'
+import { defineProps, type PropType } from 'vue'
 import { useStore } from 'vuex'
 
-import { findById } from '@/helpers'
 import type { Post } from '@/utils/dtos'
+import PluralComponent from './PluralComponent.vue'
 
 defineProps({
   posts: {
@@ -40,10 +49,8 @@ defineProps({
 
 const store = useStore()
 
-const users = computed(() => store.state.users)
-
 function userById(userId: string) {
-  return findById(userId, users.value)
+  return store.getters.user(userId)
 }
 </script>
 

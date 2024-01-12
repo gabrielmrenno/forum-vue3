@@ -17,7 +17,9 @@
         </div>
 
         <div class="activity">
-          <p class="replies-count">{{ thread.posts.length }} replies</p>
+          <p class="replies-count">
+            <PluralComponent :count="thread.repliesCount" word="reply" plural="replies" />
+          </p>
 
           <img class="avatar-medium" :src="userById(thread.userId)?.avatar" alt="" />
 
@@ -38,11 +40,12 @@ import { computed, defineProps, type PropType } from 'vue'
 import { useStore } from 'vuex'
 
 import { findById } from '@/helpers'
-import type { Thread, User } from '@/utils/dtos'
+import type { User } from '@/utils/dtos'
+import PluralComponent from './PluralComponent.vue'
 
 defineProps({
   threads: {
-    type: Array as PropType<Thread[]>,
+    type: Array as PropType<any[]>,
     required: true
   }
 })
