@@ -1,7 +1,6 @@
 import { createStore } from 'vuex'
 
 import { findById, upsert } from '@/helpers'
-import sourceData from '@/utils/data.json'
 import type { AddPost, AddThread, Post, Thread, UpdateThread } from '@/utils/dtos'
 
 interface HighOrderAppendChildToParentMutationParams {
@@ -17,7 +16,11 @@ interface AppendChildToParentMutationParams {
 export default createStore({
   // application global data - to use in multiple components
   state: {
-    ...sourceData,
+    categories: [],
+    forums: [],
+    posts: [],
+    threads: [],
+    users: [],
     authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
   },
   getters: {
@@ -105,12 +108,11 @@ export default createStore({
   },
   // synchronous transactions that modify the state. They are the only way to change the state in the Vuex store
   mutations: {
-    setPost(state, { newPost }) {
-      upsert(state.posts, newPost)
+    setPost(state, { post }) {
+      upsert(state.posts, post)
     },
-    setUser(state, { user, userId }) {
-      const userIndex = state.users.findIndex((user) => user.id === userId)
-      state.users[userIndex] = user
+    setUser(state, { user }) {
+      upsert(state.users, user)
     },
     setThread(state, { thread }) {
       upsert(state.threads, thread)

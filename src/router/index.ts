@@ -33,9 +33,9 @@ const router = createRouter({
         // check if thread exists
         const threadExists = findById(to.params.id as string, store.state.threads)
         // if exists continue
-        if (threadExists) {
-          return next()
-        }
+        // if (threadExists) {
+        return next()
+        // }
         // if doesn't exist redirect to not found
         // it will not change the url when get NotFound page
         return next({

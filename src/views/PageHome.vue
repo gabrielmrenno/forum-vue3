@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 
 import CategoryList from '@/components/CategoryList.vue'
@@ -12,6 +12,10 @@ import CategoryList from '@/components/CategoryList.vue'
 const store = useStore()
 
 const categories = computed(() => store.state.categories)
+
+onBeforeMount(() => {
+  console.log('categories', categories.value)
+})
 </script>
 
 <style scoped></style>

@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import localizedDate from 'dayjs/plugin/localizedFormat'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedDate)
@@ -15,7 +15,8 @@ dayjs.extend(localizedDate)
 const props = defineProps({
   timestamp: {
     type: Number,
-    required: true
+    required: true,
+    default: new Date().getTime()
   }
 })
 

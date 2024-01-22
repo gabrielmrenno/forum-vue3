@@ -10,7 +10,8 @@ defineProps({
   },
   count: {
     type: Number,
-    required: true
+    required: true,
+    default: 0
   },
   plural: {
     type: String,
